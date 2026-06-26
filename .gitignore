@@ -1,0 +1,21 @@
+data/*.npy
+data/*.csv
+outputs/*
+checkpoints/*.pt
+checkpoints/*.pth
+models/*
+__pycache__/
+.pytest_cache/
+.venv/
+*.egg-info/
+dist/
+build/
+.eggs/
+*.pyc
+*.pyo
+
+# Keep placeholders
+!data/.gitkeep
+!outputs/.gitkeep
+!checkpoints/.gitkeep
+!configs/sde_lstm_default.yaml

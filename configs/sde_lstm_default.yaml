@@ -1,0 +1,48 @@
+seed: 42
+
+data_dir: data
+output_dir: outputs/sde_lstm
+checkpoint_dir: checkpoints
+
+train_file: X_train.npy
+test_file: X_test.npy
+
+debug_mode: true
+debug_train_size: 100000
+debug_test_size: 20000
+
+sequence_length: 30
+n_features: 4
+dt: 1.0
+
+batch_size: 1024
+epochs: 10
+learning_rate: 0.0005
+weight_decay: 0.000001
+
+hidden_dim: 128
+num_layers: 2
+dropout: 0.1
+
+gradient_clip: 1.0
+num_workers: 0
+
+min_logvar: -8.0
+max_logvar: 4.0
+min_std: 0.001
+
+initialise_from_c3: true
+c3_checkpoint_path: ../C3-VAESDE-ADSB-LSTM/outputs/lstm/motion_lstm.pt
+strict_c3_load: false
+freeze_lstm_backbone_epochs: 0
+
+threshold_quantiles: [0.90, 0.95, 0.99]
+
+score_columns:
+  - total_nll
+  - pos_nll
+  - vel_nll
+  - mahalanobis
+  - final_step_nll
+  - max_step_nll
+  - mean_std
