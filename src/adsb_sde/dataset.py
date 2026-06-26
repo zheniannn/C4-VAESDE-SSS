@@ -18,7 +18,9 @@ class SequenceDataset(Dataset):
                 f"Expected shape (N, 30, 4), got {data.shape}"
             )
         if max_samples is not None and max_samples < len(data):
-            self._data = data[:max_samples]
+            rng = np.random.default_rng(42)
+            idx = np.sort(rng.choice(len(data), max_samples, replace=False))
+            self._data = data[idx]
         else:
             self._data = data
 
