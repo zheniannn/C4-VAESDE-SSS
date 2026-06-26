@@ -31,7 +31,7 @@ def train_one_epoch(
         x_input = x_input.to(device)
         y_target = y_target.to(device)
 
-        mu, logvar = model(x_input)
+        mu, logvar, _ = model(x_input)
         loss = gaussian_nll_loss(mu, logvar, y_target)
         mse = mse_for_monitoring(mu, y_target)
 
@@ -63,7 +63,7 @@ def evaluate(
         x_input = x_input.to(device)
         y_target = y_target.to(device)
 
-        mu, logvar = model(x_input)
+        mu, logvar, _ = model(x_input)
         loss = gaussian_nll_loss(mu, logvar, y_target)
         mse = mse_for_monitoring(mu, y_target)
 
@@ -99,19 +99,20 @@ def fit_model(config: dict) -> None:
     test_ds = SequenceDataset(X_test, max_samples=max_test)
 
     num_workers = config.get("num_workers", 0)
+    pin = torch.cuda.is_available()
     train_loader = DataLoader(
         train_ds,
         batch_size=config["batch_size"],
         shuffle=True,
         num_workers=num_workers,
-        pin_memory=True,
+        pin_memory=pin,
     )
     test_loader = DataLoader(
         test_ds,
         batch_size=config["batch_size"],
         shuffle=False,
         num_workers=num_workers,
-        pin_memory=True,
+        pin_memory=pin,
     )
 
     device = get_device()

@@ -66,15 +66,16 @@ def _make_model():
 def test_model_output_shapes():
     model = _make_model()
     x = torch.randn(4, 29, 4)
-    mu, logvar = model(x)
+    mu, logvar, hidden = model(x)
     assert mu.shape == (4, 29, 4)
     assert logvar.shape == (4, 29, 4)
+    assert len(hidden) == 2  # (h_n, c_n)
 
 
 def test_logvar_clamped():
     model = _make_model()
     x = torch.randn(4, 29, 4) * 100  # extreme input
-    _, logvar = model(x)
+    _, logvar, _ = model(x)
     assert logvar.min().item() >= -8.0 - 1e-5
     assert logvar.max().item() <= 4.0 + 1e-5
 
@@ -119,7 +120,7 @@ def test_train_eval_loop():
 
     model.train()
     for x_input, y_target in loader:
-        mu, logvar = model(x_input)
+        mu, logvar, _ = model(x_input)
         loss = gaussian_nll_loss(mu, logvar, y_target)
         optimizer.zero_grad()
         loss.backward()
@@ -129,7 +130,7 @@ def test_train_eval_loop():
     model.eval()
     with torch.no_grad():
         for x_input, y_target in loader:
-            mu, logvar = model(x_input)
+            mu, logvar, _ = model(x_input)
             loss = gaussian_nll_loss(mu, logvar, y_target)
             assert math.isfinite(loss.item())
 

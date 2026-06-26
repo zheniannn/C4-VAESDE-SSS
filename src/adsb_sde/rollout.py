@@ -15,27 +15,34 @@ def sample_rollout(
     deterministic: bool = False,
 ) -> np.ndarray:
     # initial_context: (context_len, 4)
+    # Pass the full context once to warm up hidden state, then step one token at a time.
     model.eval()
     context = torch.tensor(initial_context, dtype=torch.float32, device=device)
-    generated = [context.cpu().numpy()]
+    generated: list[np.ndarray] = [context.cpu().numpy()]
 
-    history = context.unsqueeze(0)  # (1, context_len, 4)
+    # Warm up: run the full context through the LSTM to get hidden state.
+    # Shape: (1, context_len, 4)
+    ctx = context.unsqueeze(0)
+    mu, logvar, hidden = model(ctx)  # hidden carries (h_n, c_n) after full context
+
+    # The prediction for the next step after the last context token:
+    mu_last     = mu[0, -1, :]      # (4,)
+    logvar_last = logvar[0, -1, :]  # (4,)
 
     for _ in range(steps):
-        mu, logvar = model(history)   # (1, T, 4)
-        # Take prediction at the last timestep
-        mu_last = mu[0, -1, :]       # (4,)
-        logvar_last = logvar[0, -1, :]  # (4,)
-
         if deterministic:
             next_state = mu_last
         else:
             std = torch.exp(0.5 * logvar_last)
-            eps = torch.randn_like(std)
-            next_state = mu_last + std * eps
+            next_state = mu_last + std * torch.randn_like(std)
 
         generated.append(next_state.cpu().numpy()[np.newaxis, :])
-        history = torch.cat([history, next_state.unsqueeze(0).unsqueeze(0)], dim=1)
+
+        # Feed just the single new token, reusing the LSTM hidden state.
+        token = next_state.unsqueeze(0).unsqueeze(0)  # (1, 1, 4)
+        mu, logvar, hidden = model(token, hidden)
+        mu_last     = mu[0, -1, :]
+        logvar_last = logvar[0, -1, :]
 
     return np.concatenate(generated, axis=0)  # (context_len + steps, 4)
 

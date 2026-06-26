@@ -117,11 +117,25 @@ def main() -> None:
 
     summary = pd.DataFrame(results)
     output_dir = ensure_dir(config["output_dir"])
-    save_dataframe(summary, output_dir / "sde_stress_summary.csv")
+    out_path = output_dir / "sde_stress_summary.csv"
 
-    print("\nStress-test summary:")
-    print_summary_table(summary)
-    print(f"\nSaved to {output_dir / 'sde_stress_summary.csv'}")
+    # Merge with any existing results for other (score_name, quantile) pairs
+    # so that run_compare_thresholds.py can pivot across quantiles.
+    if out_path.exists():
+        existing = pd.read_csv(out_path)
+        existing = existing[
+            ~(
+                (existing["score_name"] == args.score_name)
+                & (existing["quantile"] == args.quantile)
+            )
+        ]
+        summary = pd.concat([existing, summary], ignore_index=True)
+
+    save_dataframe(summary, out_path)
+
+    print("\nStress-test summary (this run):")
+    print_summary_table(pd.DataFrame(results))
+    print(f"\nSaved to {out_path}")
 
 
 if __name__ == "__main__":

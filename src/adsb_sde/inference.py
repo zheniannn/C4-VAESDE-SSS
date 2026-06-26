@@ -43,7 +43,7 @@ def compute_sde_scores(
         x_input = x_input.to(device)
         y_target = y_target.to(device)
 
-        mu, logvar = model(x_input)
+        mu, logvar, _ = model(x_input)
         decomp = decompose_nll(mu, logvar, y_target)
 
         nll_feat = decomp["nll_per_feature"]          # (B, T, 4)

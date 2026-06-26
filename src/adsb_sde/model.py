@@ -34,13 +34,17 @@ class ProbabilisticMotionLSTM(nn.Module):
         self.mean_head = nn.Linear(hidden_dim, input_dim)
         self.logvar_head = nn.Linear(hidden_dim, input_dim)
 
-    def forward(self, x: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
-        # x: (B, 29, 4)
-        out, _ = self.lstm(x)           # (B, 29, hidden_dim)
-        mu = self.mean_head(out)        # (B, 29, 4)
-        logvar = self.logvar_head(out)  # (B, 29, 4)
+    def forward(
+        self,
+        x: torch.Tensor,
+        hidden: tuple[torch.Tensor, torch.Tensor] | None = None,
+    ) -> tuple[torch.Tensor, torch.Tensor, tuple[torch.Tensor, torch.Tensor]]:
+        # x: (B, T, 4)
+        out, hidden_out = self.lstm(x, hidden)   # (B, T, hidden_dim)
+        mu = self.mean_head(out)                  # (B, T, 4)
+        logvar = self.logvar_head(out)            # (B, T, 4)
         logvar = torch.clamp(logvar, self.min_logvar, self.max_logvar)
-        return mu, logvar
+        return mu, logvar, hidden_out
 
 
 def predict_drift(mu: torch.Tensor, x_input: torch.Tensor, dt: float = 1.0) -> torch.Tensor:
