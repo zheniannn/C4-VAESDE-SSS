@@ -15,6 +15,11 @@ from adsb_sde.corruption import (
 )
 from adsb_sde.dataset import SequenceDataset
 from adsb_sde.inference import compute_sde_scores
+from adsb_sde.kinematic_rules import (
+    apply_stationary_rule,
+    calibrate_stationary_thresholds,
+    compute_kinematic_features,
+)
 from adsb_sde.loss import gaussian_nll_loss, mse_for_monitoring
 from adsb_sde.model import ProbabilisticMotionLSTM
 from adsb_sde.rollout import sample_rollout
@@ -192,3 +197,85 @@ def test_sample_rollout_stochastic_shape():
     device = torch.device("cpu")
     result = sample_rollout(model, context, steps=5, device=device, deterministic=False)
     assert result.shape == (35, 4)
+
+
+# --------------------------------------------------------------------------- #
+# Kinematic rules
+# --------------------------------------------------------------------------- #
+
+KINEMATIC_COLUMNS = [
+    "sequence_index",
+    "mean_speed_norm",
+    "max_speed_norm",
+    "min_speed_norm",
+    "start_end_displacement_norm",
+    "path_length_norm",
+    "displacement_to_path_ratio",
+    "mean_step_displacement_norm",
+    "max_step_displacement_norm",
+]
+
+THRESHOLD_KEYS = [
+    "mean_speed_p01",
+    "start_end_displacement_p01",
+    "path_length_p01",
+    "mean_step_displacement_p01",
+    "quantile",
+]
+
+
+def test_compute_kinematic_features_columns():
+    df = compute_kinematic_features(SYNTHETIC)
+    assert len(df) == N
+    for col in KINEMATIC_COLUMNS:
+        assert col in df.columns, f"Missing column: {col}"
+
+
+def test_calibrate_stationary_thresholds_keys():
+    thresholds = calibrate_stationary_thresholds(SYNTHETIC, quantile=0.01)
+    for key in THRESHOLD_KEYS:
+        assert key in thresholds, f"Missing key: {key}"
+    assert thresholds["quantile"] == 0.01
+
+
+def test_apply_stationary_rule_has_flag():
+    thresholds = calibrate_stationary_thresholds(SYNTHETIC, quantile=0.01)
+    df = apply_stationary_rule(SYNTHETIC, thresholds)
+    assert "stationary_flag" in df.columns
+    assert df["stationary_flag"].dtype == bool or df["stationary_flag"].isin([True, False]).all()
+
+
+def test_stationary_clutter_higher_flag_rate_than_moving():
+    # Build synthetic moving data: non-trivial velocities
+    rng2 = np.random.default_rng(1)
+    moving = rng2.standard_normal((256, 30, 4)).astype(np.float32)
+    moving[:, :, 2] += 1.0   # positive vE baseline
+    moving[:, :, 3] += 1.0   # positive vN baseline
+    # Recompute positions
+    for t in range(1, 30):
+        moving[:, t, 0] = moving[:, t - 1, 0] + moving[:, t - 1, 2]
+        moving[:, t, 1] = moving[:, t - 1, 1] + moving[:, t - 1, 3]
+
+    clutter = stationary_clutter(moving)
+
+    thresholds = calibrate_stationary_thresholds(moving, quantile=0.05)
+    moving_feats  = apply_stationary_rule(moving,  thresholds)
+    clutter_feats = apply_stationary_rule(clutter, thresholds)
+
+    moving_rate  = moving_feats["stationary_flag"].mean()
+    clutter_rate = clutter_feats["stationary_flag"].mean()
+    assert clutter_rate > moving_rate, (
+        f"Expected stationary clutter flag rate ({clutter_rate:.3f}) "
+        f"> moving flag rate ({moving_rate:.3f})"
+    )
+
+
+def test_kinematic_module_imports():
+    # Verify all public symbols are importable
+    from adsb_sde.kinematic_rules import (  # noqa: F401
+        apply_stationary_rule,
+        calibrate_stationary_thresholds,
+        compute_kinematic_features,
+        load_thresholds,
+        save_thresholds,
+    )

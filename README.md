@@ -178,6 +178,66 @@ Outputs:
 - `outputs/sde_lstm/rollout_stochastic.npy`
 - `outputs/sde_lstm/rollout_examples.png`
 
+## Stationary-Clutter Rule
+
+The SDE-LSTM detects **dynamic** abnormalities via transition NLL — trajectories
+where the actual next state is unlikely under the learned distribution. However,
+stationary clutter (a nearly-fixed aircraft or ghost return) is a *highly
+predictable* sequence: constant position, near-zero velocity. The model learns
+this pattern well, so NLL stays low and the SDE score does not flag it.
+
+To close this gap, C4 adds a simple kinematic **lower-tail rule** calibrated
+from clean train data:
+
+> **Flag stationary clutter if any of:**
+> - `mean_speed_norm` < train p1
+> - `start_end_displacement_norm` < train p1
+> - `path_length_norm` < train p1
+> - `mean_step_displacement_norm` < train p1
+
+These thresholds are data-driven — calibrated at the 1st percentile of the
+clean training set in normalised units — so no physical m/s cutoff is hardcoded.
+
+**Final C4 detector:**
+
+```
+flag_abnormal = (SDE_total_nll > train_p99) OR (stationary_rule == True)
+```
+
+### Stationary-rule commands
+
+Calibrate and apply the rule on train/test:
+
+```bash
+python scripts/run_stationary_rule.py --config configs/sde_lstm_default.yaml
+```
+
+Stress-test the rule across all corruptions:
+
+```bash
+python scripts/run_stress_test_stationary_rule.py \
+  --config configs/sde_lstm_default.yaml \
+  --max-samples 50000
+```
+
+Fused evaluation (SDE + stationary rule):
+
+```bash
+python scripts/run_fused_sde_stationary.py \
+  --config configs/sde_lstm_default.yaml \
+  --score-name total_nll \
+  --quantile 0.99 \
+  --max-samples 50000
+```
+
+Outputs:
+- `outputs/sde_lstm/stationary_thresholds.json`
+- `outputs/sde_lstm/train_stationary_features.csv`
+- `outputs/sde_lstm/test_stationary_features.csv`
+- `outputs/sde_lstm/stationary_rule_summary.csv`
+- `outputs/sde_lstm/stationary_rule_stress_summary.csv`
+- `outputs/sde_lstm/fused_sde_stationary_summary.csv`
+
 ## Interpretation of SDE Scores
 
 | Score | Meaning |
