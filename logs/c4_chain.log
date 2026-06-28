@@ -1,0 +1,180 @@
+### C4 TRAIN ###
+[C3 init] Loaded 10 weight tensors, skipped 0.
+[C3 init] Loaded from ../C3-VAESDE-ADSB-LSTM/outputs/lstm/motion_lstm.pt
+  loaded: lstm.weight_ih_l0 -> lstm.weight_ih_l0
+  loaded: lstm.weight_hh_l0 -> lstm.weight_hh_l0
+  loaded: lstm.bias_ih_l0 -> lstm.bias_ih_l0
+  loaded: lstm.bias_hh_l0 -> lstm.bias_hh_l0
+  loaded: lstm.weight_ih_l1 -> lstm.weight_ih_l1
+  loaded: lstm.weight_hh_l1 -> lstm.weight_hh_l1
+  loaded: lstm.bias_ih_l1 -> lstm.bias_ih_l1
+  loaded: lstm.bias_hh_l1 -> lstm.bias_hh_l1
+  loaded: head.weight -> mean_head.weight
+  loaded: head.bias -> mean_head.bias
+
+Training SDE-LSTM for 10 epochs on cuda
+  train sequences: 100000, test sequences: 20000
+
+  train:   0%|          | 0/98 [00:00<?, ?it/s]  train:   1%|          | 1/98 [00:01<02:56,  1.82s/it]  train:   3%|▎         | 3/98 [00:01<00:48,  1.97it/s]  train:   6%|▌         | 6/98 [00:02<00:20,  4.50it/s]  train:   9%|▉         | 9/98 [00:02<00:12,  7.39it/s]  train:  13%|█▎        | 13/98 [00:02<00:07, 11.59it/s]  train:  17%|█▋        | 17/98 [00:02<00:05, 15.69it/s]  train:  20%|██        | 20/98 [00:02<00:04, 17.95it/s]  train:  24%|██▍       | 24/98 [00:02<00:03, 21.63it/s]  train:  29%|██▊       | 28/98 [00:02<00:02, 24.44it/s]  train:  33%|███▎      | 32/98 [00:02<00:02, 24.08it/s]  train:  37%|███▋      | 36/98 [00:03<00:02, 26.49it/s]  train:  41%|████      | 40/98 [00:03<00:02, 28.32it/s]  train:  45%|████▍     | 44/98 [00:03<00:01, 29.69it/s]  train:  49%|████▉     | 48/98 [00:03<00:01, 30.85it/s]  train:  53%|█████▎    | 52/98 [00:03<00:01, 31.56it/s]  train:  57%|█████▋    | 56/98 [00:03<00:01, 32.01it/s]  train:  61%|██████    | 60/98 [00:03<00:01, 32.49it/s]  train:  65%|██████▌   | 64/98 [00:03<00:01, 32.73it/s]  train:  69%|██████▉   | 68/98 [00:03<00:00, 32.99it/s]  train:  73%|███████▎  | 72/98 [00:04<00:00, 33.19it/s]  train:  78%|███████▊  | 76/98 [00:04<00:00, 33.25it/s]  train:  82%|████████▏ | 80/98 [00:04<00:00, 32.93it/s]  train:  86%|████████▌ | 84/98 [00:04<00:00, 33.05it/s]  train:  90%|████████▉ | 88/98 [00:04<00:00, 33.18it/s]  train:  94%|█████████▍| 92/98 [00:04<00:00, 32.68it/s]  train:  98%|█████████▊| 96/98 [00:04<00:00, 30.01it/s]                                                        Epoch   1/10 | train NLL -1.0168  MSE 0.029025 | test NLL -1.5095  MSE 0.021156
+  train:   0%|          | 0/98 [00:00<?, ?it/s]  train:   4%|▍         | 4/98 [00:00<00:02, 32.73it/s]  train:   8%|▊         | 8/98 [00:00<00:02, 32.70it/s]  train:  12%|█▏        | 12/98 [00:00<00:02, 32.42it/s]  train:  16%|█▋        | 16/98 [00:00<00:02, 32.26it/s]  train:  20%|██        | 20/98 [00:00<00:02, 32.08it/s]  train:  24%|██▍       | 24/98 [00:00<00:02, 32.24it/s]  train:  29%|██▊       | 28/98 [00:00<00:02, 32.35it/s]  train:  33%|███▎      | 32/98 [00:00<00:02, 32.70it/s]  train:  37%|███▋      | 36/98 [00:01<00:01, 32.55it/s]  train:  41%|████      | 40/98 [00:01<00:01, 32.58it/s]  train:  45%|████▍     | 44/98 [00:01<00:01, 30.16it/s]  train:  49%|████▉     | 48/98 [00:01<00:01, 30.72it/s]  train:  53%|█████▎    | 52/98 [00:01<00:01, 31.45it/s]  train:  57%|█████▋    | 56/98 [00:01<00:01, 31.96it/s]  train:  61%|██████    | 60/98 [00:01<00:01, 32.33it/s]  train:  65%|██████▌   | 64/98 [00:01<00:01, 32.54it/s]  train:  69%|██████▉   | 68/98 [00:02<00:00, 32.85it/s]  train:  73%|███████▎  | 72/98 [00:02<00:00, 33.05it/s]  train:  78%|███████▊  | 76/98 [00:02<00:00, 33.25it/s]  train:  82%|████████▏ | 80/98 [00:02<00:00, 33.25it/s]  train:  86%|████████▌ | 84/98 [00:02<00:00, 33.18it/s]  train:  90%|████████▉ | 88/98 [00:02<00:00, 33.31it/s]  train:  94%|█████████▍| 92/98 [00:02<00:00, 33.27it/s]  train:  98%|█████████▊| 96/98 [00:02<00:00, 33.31it/s]                                                        Epoch   2/10 | train NLL -1.5773  MSE 0.021547 | test NLL -1.7516  MSE 0.017961
+  train:   0%|          | 0/98 [00:00<?, ?it/s]  train:   4%|▍         | 4/98 [00:00<00:02, 33.00it/s]  train:   8%|▊         | 8/98 [00:00<00:02, 33.04it/s]  train:  12%|█▏        | 12/98 [00:00<00:02, 33.14it/s]  train:  16%|█▋        | 16/98 [00:00<00:02, 33.22it/s]  train:  20%|██        | 20/98 [00:00<00:02, 33.02it/s]  train:  24%|██▍       | 24/98 [00:00<00:02, 32.83it/s]  train:  29%|██▊       | 28/98 [00:00<00:02, 32.89it/s]  train:  33%|███▎      | 32/98 [00:00<00:02, 32.99it/s]  train:  37%|███▋      | 36/98 [00:01<00:01, 33.06it/s]  train:  41%|████      | 40/98 [00:01<00:01, 33.12it/s]  train:  45%|████▍     | 44/98 [00:01<00:01, 32.92it/s]  train:  49%|████▉     | 48/98 [00:01<00:01, 32.70it/s]  train:  53%|█████▎    | 52/98 [00:01<00:01, 29.80it/s]  train:  57%|█████▋    | 56/98 [00:01<00:01, 30.57it/s]  train:  61%|██████    | 60/98 [00:01<00:01, 31.06it/s]  train:  65%|██████▌   | 64/98 [00:01<00:01, 31.41it/s]  train:  69%|██████▉   | 68/98 [00:02<00:00, 31.46it/s]  train:  73%|███████▎  | 72/98 [00:02<00:00, 31.81it/s]  train:  78%|███████▊  | 76/98 [00:02<00:00, 31.94it/s]  train:  82%|████████▏ | 80/98 [00:02<00:00, 32.19it/s]  train:  86%|████████▌ | 84/98 [00:02<00:00, 32.57it/s]  train:  90%|████████▉ | 88/98 [00:02<00:00, 32.68it/s]  train:  94%|█████████▍| 92/98 [00:02<00:00, 32.71it/s]  train:  98%|█████████▊| 96/98 [00:02<00:00, 32.96it/s]                                                        Epoch   3/10 | train NLL -1.7380  MSE 0.019697 | test NLL -1.8879  MSE 0.017166
+  train:   0%|          | 0/98 [00:00<?, ?it/s]  train:   4%|▍         | 4/98 [00:00<00:02, 33.15it/s]  train:   8%|▊         | 8/98 [00:00<00:02, 32.69it/s]  train:  12%|█▏        | 12/98 [00:00<00:02, 32.73it/s]  train:  16%|█▋        | 16/98 [00:00<00:02, 32.47it/s]  train:  20%|██        | 20/98 [00:00<00:02, 32.54it/s]  train:  24%|██▍       | 24/98 [00:00<00:02, 32.33it/s]  train:  29%|██▊       | 28/98 [00:00<00:02, 32.41it/s]  train:  33%|███▎      | 32/98 [00:00<00:02, 32.10it/s]  train:  37%|███▋      | 36/98 [00:01<00:01, 31.93it/s]  train:  41%|████      | 40/98 [00:01<00:01, 32.26it/s]  train:  45%|████▍     | 44/98 [00:01<00:01, 32.53it/s]  train:  49%|████▉     | 48/98 [00:01<00:01, 32.78it/s]  train:  53%|█████▎    | 52/98 [00:01<00:01, 32.87it/s]  train:  57%|█████▋    | 56/98 [00:01<00:01, 32.89it/s]  train:  61%|██████    | 60/98 [00:01<00:01, 30.18it/s]  train:  65%|██████▌   | 64/98 [00:01<00:01, 31.00it/s]  train:  69%|██████▉   | 68/98 [00:02<00:00, 31.66it/s]  train:  73%|███████▎  | 72/98 [00:02<00:00, 32.14it/s]  train:  78%|███████▊  | 76/98 [00:02<00:00, 32.18it/s]  train:  82%|████████▏ | 80/98 [00:02<00:00, 32.54it/s]  train:  86%|████████▌ | 84/98 [00:02<00:00, 32.67it/s]  train:  90%|████████▉ | 88/98 [00:02<00:00, 32.76it/s]  train:  94%|█████████▍| 92/98 [00:02<00:00, 32.93it/s]  train:  98%|█████████▊| 96/98 [00:02<00:00, 32.96it/s]                                                        Epoch   4/10 | train NLL -1.8134  MSE 0.019043 | test NLL -1.9035  MSE 0.016995
+  train:   0%|          | 0/98 [00:00<?, ?it/s]  train:   3%|▎         | 3/98 [00:00<00:04, 22.82it/s]  train:   7%|▋         | 7/98 [00:00<00:03, 28.37it/s]  train:  11%|█         | 11/98 [00:00<00:02, 29.87it/s]  train:  15%|█▌        | 15/98 [00:00<00:02, 30.81it/s]  train:  19%|█▉        | 19/98 [00:00<00:02, 31.41it/s]  train:  23%|██▎       | 23/98 [00:00<00:02, 31.75it/s]  train:  28%|██▊       | 27/98 [00:00<00:02, 32.07it/s]  train:  32%|███▏      | 31/98 [00:00<00:02, 32.52it/s]  train:  36%|███▌      | 35/98 [00:01<00:01, 32.82it/s]  train:  40%|███▉      | 39/98 [00:01<00:01, 32.98it/s]  train:  44%|████▍     | 43/98 [00:01<00:01, 32.91it/s]  train:  48%|████▊     | 47/98 [00:01<00:01, 33.11it/s]  train:  52%|█████▏    | 51/98 [00:01<00:01, 33.12it/s]  train:  56%|█████▌    | 55/98 [00:01<00:01, 33.15it/s]  train:  60%|██████    | 59/98 [00:01<00:01, 32.77it/s]  train:  64%|██████▍   | 63/98 [00:01<00:01, 32.40it/s]  train:  68%|██████▊   | 67/98 [00:02<00:01, 29.28it/s]  train:  72%|███████▏  | 71/98 [00:02<00:00, 29.92it/s]  train:  77%|███████▋  | 75/98 [00:02<00:00, 30.09it/s]  train:  81%|████████  | 79/98 [00:02<00:00, 31.07it/s]  train:  85%|████████▍ | 83/98 [00:02<00:00, 31.66it/s]  train:  89%|████████▉ | 87/98 [00:02<00:00, 32.05it/s]  train:  93%|█████████▎| 91/98 [00:02<00:00, 32.47it/s]  train:  97%|█████████▋| 95/98 [00:02<00:00, 32.79it/s]                                                        Epoch   5/10 | train NLL -1.7848  MSE 0.018997 | test NLL -1.9508  MSE 0.016320
+  train:   0%|          | 0/98 [00:00<?, ?it/s]  train:   4%|▍         | 4/98 [00:00<00:02, 33.31it/s]  train:   8%|▊         | 8/98 [00:00<00:02, 32.91it/s]  train:  12%|█▏        | 12/98 [00:00<00:02, 29.47it/s]  train:  16%|█▋        | 16/98 [00:00<00:02, 30.78it/s]  train:  20%|██        | 20/98 [00:00<00:02, 31.63it/s]  train:  24%|██▍       | 24/98 [00:00<00:02, 32.31it/s]  train:  29%|██▊       | 28/98 [00:00<00:02, 32.39it/s]  train:  33%|███▎      | 32/98 [00:01<00:02, 32.17it/s]  train:  37%|███▋      | 36/98 [00:01<00:01, 32.19it/s]  train:  41%|████      | 40/98 [00:01<00:01, 32.28it/s]  train:  45%|████▍     | 44/98 [00:01<00:01, 32.66it/s]  train:  49%|████▉     | 48/98 [00:01<00:01, 32.96it/s]  train:  53%|█████▎    | 52/98 [00:01<00:01, 33.17it/s]  train:  57%|█████▋    | 56/98 [00:01<00:01, 32.93it/s]  train:  61%|██████    | 60/98 [00:01<00:01, 32.72it/s]  train:  65%|██████▌   | 64/98 [00:01<00:01, 32.37it/s]  train:  69%|██████▉   | 68/98 [00:02<00:00, 31.94it/s]  train:  73%|███████▎  | 72/98 [00:02<00:00, 31.25it/s]  train:  78%|███████▊  | 76/98 [00:02<00:00, 29.40it/s]  train:  82%|████████▏ | 80/98 [00:02<00:00, 30.54it/s]  train:  86%|████████▌ | 84/98 [00:02<00:00, 31.34it/s]  train:  90%|████████▉ | 88/98 [00:02<00:00, 31.98it/s]  train:  94%|█████████▍| 92/98 [00:02<00:00, 32.35it/s]  train:  98%|█████████▊| 96/98 [00:03<00:00, 32.58it/s]                                                        Epoch   6/10 | train NLL -1.8757  MSE 0.018330 | test NLL -2.0872  MSE 0.015799
+  train:   0%|          | 0/98 [00:00<?, ?it/s]  train:   4%|▍         | 4/98 [00:00<00:02, 32.63it/s]  train:   8%|▊         | 8/98 [00:00<00:02, 32.93it/s]  train:  12%|█▏        | 12/98 [00:00<00:02, 32.67it/s]  train:  16%|█▋        | 16/98 [00:00<00:02, 32.77it/s]  train:  20%|██        | 20/98 [00:00<00:02, 32.79it/s]  train:  24%|██▍       | 24/98 [00:00<00:02, 30.28it/s]  train:  29%|██▊       | 28/98 [00:00<00:02, 31.15it/s]  train:  33%|███▎      | 32/98 [00:01<00:02, 31.76it/s]  train:  37%|███▋      | 36/98 [00:01<00:01, 32.18it/s]  train:  41%|████      | 40/98 [00:01<00:01, 32.54it/s]  train:  45%|████▍     | 44/98 [00:01<00:01, 32.54it/s]  train:  49%|████▉     | 48/98 [00:01<00:01, 32.64it/s]  train:  53%|█████▎    | 52/98 [00:01<00:01, 32.76it/s]  train:  57%|█████▋    | 56/98 [00:01<00:01, 32.97it/s]  train:  61%|██████    | 60/98 [00:01<00:01, 33.11it/s]  train:  65%|██████▌   | 64/98 [00:01<00:01, 33.07it/s]  train:  69%|██████▉   | 68/98 [00:02<00:00, 33.11it/s]  train:  73%|███████▎  | 72/98 [00:02<00:00, 33.06it/s]  train:  78%|███████▊  | 76/98 [00:02<00:00, 32.77it/s]  train:  82%|████████▏ | 80/98 [00:02<00:00, 32.31it/s]  train:  86%|████████▌ | 84/98 [00:02<00:00, 29.91it/s]  train:  90%|████████▉ | 88/98 [00:02<00:00, 30.62it/s]  train:  94%|█████████▍| 92/98 [00:02<00:00, 31.35it/s]  train:  98%|█████████▊| 96/98 [00:02<00:00, 31.87it/s]                                                        Epoch   7/10 | train NLL -1.8075  MSE 0.018217 | test NLL -1.6568  MSE 0.017186
+  train:   0%|          | 0/98 [00:00<?, ?it/s]  train:   4%|▍         | 4/98 [00:00<00:02, 33.33it/s]  train:   8%|▊         | 8/98 [00:00<00:02, 33.13it/s]  train:  12%|█▏        | 12/98 [00:00<00:02, 33.01it/s]  train:  16%|█▋        | 16/98 [00:00<00:02, 33.08it/s]  train:  20%|██        | 20/98 [00:00<00:02, 33.15it/s]  train:  24%|██▍       | 24/98 [00:00<00:02, 33.07it/s]  train:  29%|██▊       | 28/98 [00:00<00:02, 32.61it/s]  train:  33%|███▎      | 32/98 [00:01<00:02, 30.21it/s]  train:  37%|███▋      | 36/98 [00:01<00:01, 31.09it/s]  train:  41%|████      | 40/98 [00:01<00:01, 31.66it/s]  train:  45%|████▍     | 44/98 [00:01<00:01, 31.98it/s]  train:  49%|████▉     | 48/98 [00:01<00:01, 32.30it/s]  train:  53%|█████▎    | 52/98 [00:01<00:01, 32.61it/s]  train:  57%|█████▋    | 56/98 [00:01<00:01, 32.69it/s]  train:  61%|██████    | 60/98 [00:01<00:01, 32.79it/s]  train:  65%|██████▌   | 64/98 [00:01<00:01, 32.80it/s]  train:  69%|██████▉   | 68/98 [00:02<00:00, 32.99it/s]  train:  73%|███████▎  | 72/98 [00:02<00:00, 33.19it/s]  train:  78%|███████▊  | 76/98 [00:02<00:00, 33.19it/s]  train:  82%|████████▏ | 80/98 [00:02<00:00, 33.17it/s]  train:  86%|████████▌ | 84/98 [00:02<00:00, 33.07it/s]  train:  90%|████████▉ | 88/98 [00:02<00:00, 32.72it/s]  train:  94%|█████████▍| 92/98 [00:02<00:00, 32.59it/s]  train:  98%|█████████▊| 96/98 [00:02<00:00, 29.72it/s]                                                        Epoch   8/10 | train NLL -1.7434  MSE 0.018454 | test NLL -1.9870  MSE 0.015898
+  train:   0%|          | 0/98 [00:00<?, ?it/s]  train:   4%|▍         | 4/98 [00:00<00:02, 33.30it/s]  train:   8%|▊         | 8/98 [00:00<00:02, 33.43it/s]  train:  12%|█▏        | 12/98 [00:00<00:02, 33.38it/s]  train:  16%|█▋        | 16/98 [00:00<00:02, 32.36it/s]  train:  20%|██        | 20/98 [00:00<00:02, 31.58it/s]  train:  24%|██▍       | 24/98 [00:00<00:02, 31.34it/s]  train:  29%|██▊       | 28/98 [00:00<00:02, 31.07it/s]  train:  33%|███▎      | 32/98 [00:01<00:02, 31.75it/s]  train:  37%|███▋      | 36/98 [00:01<00:01, 31.64it/s]  train:  41%|████      | 40/98 [00:01<00:01, 29.46it/s]  train:  45%|████▍     | 44/98 [00:01<00:01, 30.18it/s]  train:  49%|████▉     | 48/98 [00:01<00:01, 30.85it/s]  train:  53%|█████▎    | 52/98 [00:01<00:01, 31.44it/s]  train:  57%|█████▋    | 56/98 [00:01<00:01, 31.88it/s]  train:  61%|██████    | 60/98 [00:01<00:01, 32.25it/s]  train:  65%|██████▌   | 64/98 [00:02<00:01, 32.56it/s]  train:  69%|██████▉   | 68/98 [00:02<00:00, 32.88it/s]  train:  73%|███████▎  | 72/98 [00:02<00:00, 32.70it/s]  train:  78%|███████▊  | 76/98 [00:02<00:00, 32.15it/s]  train:  82%|████████▏ | 80/98 [00:02<00:00, 31.84it/s]  train:  86%|████████▌ | 84/98 [00:02<00:00, 31.79it/s]  train:  90%|████████▉ | 88/98 [00:02<00:00, 32.31it/s]  train:  94%|█████████▍| 92/98 [00:02<00:00, 32.63it/s]  train:  98%|█████████▊| 96/98 [00:03<00:00, 32.52it/s]                                                        Epoch   9/10 | train NLL -2.0083  MSE 0.017455 | test NLL -2.1160  MSE 0.015554
+  train:   0%|          | 0/98 [00:00<?, ?it/s]  train:   4%|▍         | 4/98 [00:00<00:02, 33.15it/s]  train:   8%|▊         | 8/98 [00:00<00:02, 33.29it/s]  train:  12%|█▏        | 12/98 [00:00<00:02, 33.55it/s]  train:  16%|█▋        | 16/98 [00:00<00:02, 33.34it/s]  train:  20%|██        | 20/98 [00:00<00:02, 32.51it/s]  train:  24%|██▍       | 24/98 [00:00<00:02, 32.24it/s]  train:  29%|██▊       | 28/98 [00:00<00:02, 32.09it/s]  train:  33%|███▎      | 32/98 [00:00<00:02, 32.17it/s]  train:  37%|███▋      | 36/98 [00:01<00:01, 32.40it/s]  train:  41%|████      | 40/98 [00:01<00:01, 32.52it/s]  train:  45%|████▍     | 44/98 [00:01<00:01, 32.34it/s]  train:  49%|████▉     | 48/98 [00:01<00:01, 30.19it/s]  train:  53%|█████▎    | 52/98 [00:01<00:01, 30.90it/s]  train:  57%|█████▋    | 56/98 [00:01<00:01, 30.84it/s]  train:  61%|██████    | 60/98 [00:01<00:01, 30.75it/s]  train:  65%|██████▌   | 64/98 [00:02<00:01, 31.41it/s]  train:  69%|██████▉   | 68/98 [00:02<00:00, 31.79it/s]  train:  73%|███████▎  | 72/98 [00:02<00:00, 32.16it/s]  train:  78%|███████▊  | 76/98 [00:02<00:00, 31.76it/s]  train:  82%|████████▏ | 80/98 [00:02<00:00, 31.38it/s]  train:  86%|████████▌ | 84/98 [00:02<00:00, 31.98it/s]  train:  90%|████████▉ | 88/98 [00:02<00:00, 32.40it/s]  train:  94%|█████████▍| 92/98 [00:02<00:00, 32.60it/s]  train:  98%|█████████▊| 96/98 [00:02<00:00, 32.70it/s]                                                        Epoch  10/10 | train NLL -2.0584  MSE 0.017292 | test NLL -2.1934  MSE 0.015464
+
+Checkpoint saved to outputs/sde_lstm/sde_lstm.pt
+Training history saved to outputs/sde_lstm/history.csv
+### C4 SCORE ###
+Loading checkpoint: outputs/sde_lstm/sde_lstm.pt
+Scoring train sequences (1412436)...
+Scoring test sequences (160946)...
+Scores saved to outputs/sde_lstm
+
+Thresholds:
+    score_name  quantile  threshold  test_flag_rate
+     total_nll      0.90  -1.744313        0.098909
+     total_nll      0.95  -1.429118        0.048861
+     total_nll      0.99  -0.687948        0.009444
+   mahalanobis      0.90   1.486455        0.098679
+   mahalanobis      0.95   2.103325        0.049371
+   mahalanobis      0.99   3.531699        0.009954
+  max_step_nll      0.90   2.581221        0.098511
+  max_step_nll      0.95   5.273327        0.050638
+  max_step_nll      0.99  11.213018        0.009575
+final_step_nll      0.90  -1.861983        0.099785
+final_step_nll      0.95  -1.182259        0.048401
+final_step_nll      0.99   1.459978        0.010047
+### C4 STRESS p99 ###
+Loading checkpoint: outputs/sde_lstm/sde_lstm.pt
+Using threshold -0.6879 (total_nll p99 from train)
+
+Scoring clean (50000 sequences)...
+Scoring speed_scaled_1.5...
+Scoring speed_scaled_2.0...
+Scoring random_walk_velocity...
+Scoring sudden_turn_90...
+Scoring position_jump...
+Scoring stationary_clutter...
+
+Stress-test summary (this run):
+                case score_name  quantile  threshold   mean_score    p95_score  detection_rate_at_threshold
+               clean  total_nll      0.99  -0.687948    -2.180924    -1.413054                      0.01002
+    speed_scaled_1.5  total_nll      0.99  -0.687948  4970.501361 20150.546191                      0.96258
+    speed_scaled_2.0  total_nll      0.99  -0.687948 11789.594335 45706.074609                      0.96402
+random_walk_velocity  total_nll      0.99  -0.687948   286.335388   485.399945                      1.00000
+      sudden_turn_90  total_nll      0.99  -0.687948   705.687321  1602.688788                      0.89976
+       position_jump  total_nll      0.99  -0.687948   106.331039   131.983068                      1.00000
+  stationary_clutter  total_nll      0.99  -0.687948    -2.400340    -2.230203                      0.00466
+
+Saved to outputs/sde_lstm/sde_stress_summary.csv
+### C4 STRESS p95 ###
+Loading checkpoint: outputs/sde_lstm/sde_lstm.pt
+Using threshold -1.4291 (total_nll p95 from train)
+
+Scoring clean (50000 sequences)...
+Scoring speed_scaled_1.5...
+Scoring speed_scaled_2.0...
+Scoring random_walk_velocity...
+Scoring sudden_turn_90...
+Scoring position_jump...
+Scoring stationary_clutter...
+
+Stress-test summary (this run):
+                case score_name  quantile  threshold   mean_score    p95_score  detection_rate_at_threshold
+               clean  total_nll      0.95  -1.429118    -2.180924    -1.413054                      0.05188
+    speed_scaled_1.5  total_nll      0.95  -1.429118  4970.501361 20150.546191                      0.96404
+    speed_scaled_2.0  total_nll      0.95  -1.429118 11789.594335 45706.074609                      0.96544
+random_walk_velocity  total_nll      0.95  -1.429118   286.335388   485.399945                      1.00000
+      sudden_turn_90  total_nll      0.95  -1.429118   705.687321  1602.688788                      0.90106
+       position_jump  total_nll      0.95  -1.429118   106.331039   131.983068                      1.00000
+  stationary_clutter  total_nll      0.95  -1.429118    -2.400340    -2.230203                      0.01374
+
+Saved to outputs/sde_lstm/sde_stress_summary.csv
+### C4 COMPARE ###
+
+=== Score: total_nll ===
+                case  detect@p95  detect@p99
+               clean     0.05188     0.01002
+    speed_scaled_1.5     0.96404     0.96258
+    speed_scaled_2.0     0.96544     0.96402
+random_walk_velocity     1.00000     1.00000
+      sudden_turn_90     0.90106     0.89976
+       position_jump     1.00000     1.00000
+  stationary_clutter     0.01374     0.00466
+### C4 ROLLOUT ###
+Loading checkpoint: outputs/sde_lstm/sde_lstm.pt
+Generating deterministic rollouts (8 samples, 30 steps)...
+Generating stochastic rollouts (8 samples, 30 steps)...
+Rollout arrays saved to outputs/sde_lstm
+Plot saved to outputs/sde_lstm/rollout_examples.png
+### C4 STATIONARY RULE ###
+Loading data...
+Calibrating stationary thresholds on 1412436 train sequences...
+Thresholds:
+  mean_speed_p01: 0.0030033390503376722
+  start_end_displacement_p01: 0.0
+  path_length_p01: 0.0
+  mean_step_displacement_p01: 0.0
+  quantile: 0.01
+
+Applying to train...
+Applying to test...
+
+Stationary rule summary:
+split  stationary_flag_rate  low_mean_speed_rate  low_displacement_rate  low_path_length_rate  low_step_displacement_rate
+train              0.003999             0.003999                    0.0                   0.0                         0.0
+ test              0.004803             0.004803                    0.0                   0.0                         0.0
+
+Saved to outputs/sde_lstm
+### C4 STATIONARY STRESS ###
+Loading thresholds from outputs/sde_lstm/stationary_thresholds.json
+
+Evaluating on 50000 test sequences...
+  speed_scaled_1.5...
+  speed_scaled_2.0...
+  random_walk_velocity...
+  sudden_turn_90...
+  position_jump...
+  stationary_clutter...
+
+Stationary rule stress-test summary:
+                case  stationary_detection_rate  low_mean_speed_rate  low_displacement_rate  low_path_length_rate  low_step_displacement_rate
+               clean                    0.00462              0.00462                    0.0                   0.0                         0.0
+    speed_scaled_1.5                    0.00000              0.00000                    0.0                   0.0                         0.0
+    speed_scaled_2.0                    0.00000              0.00000                    0.0                   0.0                         0.0
+random_walk_velocity                    0.00000              0.00000                    0.0                   0.0                         0.0
+      sudden_turn_90                    0.00462              0.00462                    0.0                   0.0                         0.0
+       position_jump                    0.00462              0.00462                    0.0                   0.0                         0.0
+  stationary_clutter                    1.00000              1.00000                    0.0                   0.0                         0.0
+
+Saved to outputs/sde_lstm/stationary_rule_stress_summary.csv
+### C4 FUSED ###
+Loading SDE checkpoint: outputs/sde_lstm/sde_lstm.pt
+SDE threshold (total_nll p99): -0.6879
+Evaluating clean...
+Evaluating speed_scaled_1.5...
+Evaluating speed_scaled_2.0...
+Evaluating random_walk_velocity...
+Evaluating sudden_turn_90...
+Evaluating position_jump...
+Evaluating stationary_clutter...
+
+========================================================================
+FUSED SDE + STATIONARY RULE  |  total_nll  p99
+========================================================================
+                case  SDE p99  stationary   fused     +pp
+               clean  0.01002     0.00462 0.01464 0.00462
+    speed_scaled_1.5  0.96258     0.00000 0.96258 0.00000
+    speed_scaled_2.0  0.96402     0.00000 0.96402 0.00000
+random_walk_velocity  1.00000     0.00000 1.00000 0.00000
+      sudden_turn_90  0.89976     0.00462 0.90438 0.00462
+       position_jump  1.00000     0.00462 1.00000 0.00000
+  stationary_clutter  0.00466     1.00000 1.00000 0.99534
+========================================================================
+
+Saved to outputs/sde_lstm/fused_sde_stationary_summary.csv
+### C4 CHAIN COMPLETE ###

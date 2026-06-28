@@ -7,7 +7,7 @@ checkpoint_dir: checkpoints
 train_file: X_train.npy
 test_file: X_test.npy
 
-debug_mode: true
+debug_mode: false
 debug_train_size: 100000
 debug_test_size: 20000
 
