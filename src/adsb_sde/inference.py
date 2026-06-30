@@ -35,8 +35,14 @@ def compute_sde_scores(
     device: torch.device,
 ) -> pd.DataFrame:
     model.eval()
-    records: list[dict] = []
-    seq_idx = 0
+    # Vectorised: reduce each batch to per-sequence column tensors and move to
+    # CPU once per batch, instead of ~12 .item() GPU->CPU syncs per sequence.
+    columns = [
+        "total_nll", "pos_nll", "vel_nll", "mahalanobis",
+        "final_step_nll", "max_step_nll", "mean_std", "pos_std", "vel_std",
+        "mean_abs_error", "mean_drift_norm", "mean_diffusion_norm",
+    ]
+    chunks: dict[str, list[np.ndarray]] = {c: [] for c in columns}
     dt = 1.0
 
     for x_input, y_target in loader:
@@ -53,34 +59,26 @@ def compute_sde_scores(
         drift = predict_drift(mu, x_input, dt=dt)             # (B, T, 4)
         diffusion = predict_diffusion(logvar, dt=dt)          # (B, T, 4)
 
-        B = x_input.size(0)
-        for i in range(B):
-            nll_i = nll_feat[i]       # (T, 4)
-            mah_i = mah_feat[i]       # (T, 4)
-            std_i = std_feat[i]       # (T, 4)
-            mu_i = mu[i]              # (T, 4)
-            tgt_i = y_target[i]       # (T, 4)
-            drift_i = drift[i]        # (T, 4)
-            diff_i = diffusion[i]     # (T, 4)
+        batch = {
+            "total_nll": nll_feat.mean(dim=(1, 2)),
+            "pos_nll": nll_feat[:, :, :2].mean(dim=(1, 2)),
+            "vel_nll": nll_feat[:, :, 2:].mean(dim=(1, 2)),
+            "mahalanobis": mah_feat.mean(dim=(1, 2)),
+            "final_step_nll": nll_feat[:, -1, :].mean(dim=1),
+            "max_step_nll": nll_feat.mean(dim=2).max(dim=1).values,
+            "mean_std": std_feat.mean(dim=(1, 2)),
+            "pos_std": std_feat[:, :, :2].mean(dim=(1, 2)),
+            "vel_std": std_feat[:, :, 2:].mean(dim=(1, 2)),
+            "mean_abs_error": (mu - y_target).abs().mean(dim=(1, 2)),
+            "mean_drift_norm": drift.norm(dim=-1).mean(dim=1),
+            "mean_diffusion_norm": diffusion.norm(dim=-1).mean(dim=1),
+        }
+        for c in columns:
+            chunks[c].append(batch[c].detach().cpu().numpy())
 
-            records.append({
-                "sequence_index": seq_idx,
-                "total_nll": nll_i.mean().item(),
-                "pos_nll": nll_i[:, :2].mean().item(),
-                "vel_nll": nll_i[:, 2:].mean().item(),
-                "mahalanobis": mah_i.mean().item(),
-                "final_step_nll": nll_i[-1, :].mean().item(),
-                "max_step_nll": nll_i.mean(dim=1).max().item(),
-                "mean_std": std_i.mean().item(),
-                "pos_std": std_i[:, :2].mean().item(),
-                "vel_std": std_i[:, 2:].mean().item(),
-                "mean_abs_error": (mu_i - tgt_i).abs().mean().item(),
-                "mean_drift_norm": drift_i.norm(dim=-1).mean().item(),
-                "mean_diffusion_norm": diff_i.norm(dim=-1).mean().item(),
-            })
-            seq_idx += 1
-
-    return pd.DataFrame(records)
+    data = {c: np.concatenate(chunks[c]) if chunks[c] else np.array([]) for c in columns}
+    n = len(data["total_nll"])
+    return pd.DataFrame({"sequence_index": np.arange(n), **data})
 
 
 def score_sequences(
